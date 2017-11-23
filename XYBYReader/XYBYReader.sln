@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XYBYReader", "XYBYReader\XYBYReader.csproj", "{52B764A1-3F2D-41BD-B247-AEE1073AF0CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52B764A1-3F2D-41BD-B247-AEE1073AF0CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52B764A1-3F2D-41BD-B247-AEE1073AF0CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52B764A1-3F2D-41BD-B247-AEE1073AF0CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52B764A1-3F2D-41BD-B247-AEE1073AF0CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3DD56870-C73D-4EF6-A917-ACDE98C0F9F1}
+	EndGlobalSection
+EndGlobal
