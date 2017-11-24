@@ -24,9 +24,10 @@ namespace XYBYReader
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            LoadWeb();
+            string firstChapter = "https://www.readnovel.com/chapter/6969133904551803/18709155986044689";
+            LoadWeb(firstChapter);
         }
-        private void LoadWeb()
+        private void LoadWeb(string address)
         {
             WebRequest request = null;
             WebResponse response = null;
@@ -36,7 +37,7 @@ namespace XYBYReader
             string datetime = string.Empty;
             try
             {
-                request = WebRequest.Create("https://www.readnovel.com/chapter/6969133904551803/18709155986044689");
+                request = WebRequest.Create(address);
                 request.Timeout = 3000;
                 request.Credentials = CredentialCache.DefaultCredentials;
                 WebProxy myProxy = new WebProxy();
@@ -46,6 +47,8 @@ namespace XYBYReader
                 sreader = new StreamReader(stream, Encoding.UTF8);
                 string strReader = sreader.ReadToEnd();
                 richTextBox1.Text = strReader;
+
+                ReadWebBook();
             }
             catch (Exception ex) { }
             finally
@@ -63,7 +66,7 @@ namespace XYBYReader
                 }
             }
         }
-        private void CreatBook()
+        private void ReadWebBook()
         {
             document = new HtmlAgilityPack.HtmlDocument();
             document.LoadHtml(richTextBox1.Text);
@@ -79,7 +82,7 @@ namespace XYBYReader
 
         private void btnSplit_Click(object sender, EventArgs e)
         {
-            CreatBook();
+            ReadWebBook();
         }
 
         private void btnNextChapter_Click(object sender, EventArgs e)
@@ -90,10 +93,10 @@ namespace XYBYReader
         {
             if (document != null)
             {
-
-                string next = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[3]").InnerHtml;
-
-                HtmlNode nextnote = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]");
+                string nextChapter = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]")
+                    .Attributes["data-nurl"].Value.ToString();
+                chapterAddress = "https:" + nextChapter;
+                LoadWeb(chapterAddress);
 
             }
         }

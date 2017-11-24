@@ -46,17 +46,18 @@
             // 
             // btnSplit
             // 
-            this.btnSplit.Location = new System.Drawing.Point(641, 502);
+            this.btnSplit.Location = new System.Drawing.Point(38, 502);
             this.btnSplit.Name = "btnSplit";
             this.btnSplit.Size = new System.Drawing.Size(75, 23);
             this.btnSplit.TabIndex = 1;
             this.btnSplit.Text = "提取内容";
             this.btnSplit.UseVisualStyleBackColor = true;
+            this.btnSplit.Visible = false;
             this.btnSplit.Click += new System.EventHandler(this.btnSplit_Click);
             // 
             // btnNextChapter
             // 
-            this.btnNextChapter.Location = new System.Drawing.Point(35, 486);
+            this.btnNextChapter.Location = new System.Drawing.Point(645, 502);
             this.btnNextChapter.Name = "btnNextChapter";
             this.btnNextChapter.Size = new System.Drawing.Size(75, 23);
             this.btnNextChapter.TabIndex = 2;
