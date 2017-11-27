@@ -105,7 +105,7 @@
             this.ClientSize = new System.Drawing.Size(932, 637);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ReadChapterFrm";
-            this.Text = "Form1";
+            this.Text = "溪语碧影小说阅读";
             this.Load += new System.EventHandler(this.ReadChapterFrm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);

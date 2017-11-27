@@ -32,7 +32,24 @@ namespace XYBYReader
             string firstChapter = "https://www.readnovel.com/search?kw=%E4%BA%B2%E5%85%B5%E6%98%AF%E5%A5%B3%E5%A8%83";
             LoadWebBook(firstChapter);
 
-            // LoadBookTree();
+
+            FindBookInfo("");
+            FindCatalog(bookInfoList[0].BookAddress + "#Catalog");
+
+            LoadBookTree();
+            if (tvBook != null)
+            {
+                nextNode = tvBook.Nodes[0].Nodes[2];
+              
+                List<BookChapterClass> bl = new List<BookChapterClass>();
+                bl = bookChapterList.Where(x => x.Id == (int)nextNode.Tag).ToList();
+                string chapterAddress = bl[0].ChapterAddress;
+                LoadWebBook(chapterAddress);
+                LoadBook();
+
+                tvBook.SelectedNode = nextNode;
+                tvBook.Focus();
+            }
         }
         /// <summary>
         /// 加载网页形式的书
@@ -101,6 +118,7 @@ namespace XYBYReader
 
                 richTextBox1.AppendText(chapter);
             }
+            //richTextBox1.Select(0, 0);
         }
 
         private void btnSplit_Click(object sender, EventArgs e)
@@ -122,7 +140,7 @@ namespace XYBYReader
             FindNextChapter();
             LoadWebBook(chapterAddress);
             LoadBook();
-            richTextBox1.Select(0, 0);
+
             tvBook.SelectedNode = nextNode;
         }
         /// <summary>
