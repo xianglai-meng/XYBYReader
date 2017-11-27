@@ -16,8 +16,10 @@ namespace XYBYReader
     public partial class ReadChapterFrm : Form
     {
         HtmlAgilityPack.HtmlDocument document;
-        string chapterAddress = "https:";
+        string chapterAddress = "";
         List<BookChapterClass> bookChapterList = null;
+        List<WebBookClass> bookInfoList = null;
+        TreeNode nextNode = null;
         public ReadChapterFrm()
         {
             InitializeComponent();
@@ -26,9 +28,11 @@ namespace XYBYReader
         private void ReadChapterFrm_Load(object sender, EventArgs e)
         {
             // string firstChapter = "https://www.readnovel.com/chapter/6969133904551803/18709155986044689";
-            string firstChapter = "https://www.readnovel.com/book/7635085504787403#Catalog";
+            // string firstChapter = "https://www.readnovel.com/book/7635085504787403#Catalog";
+            string firstChapter = "https://www.readnovel.com/search?kw=%E4%BA%B2%E5%85%B5%E6%98%AF%E5%A5%B3%E5%A8%83";
             LoadWebBook(firstChapter);
 
+            // LoadBookTree();
         }
         /// <summary>
         /// 加载网页形式的书
@@ -76,31 +80,50 @@ namespace XYBYReader
         /// </summary>
         private void LoadBook()
         {
-            document = new HtmlAgilityPack.HtmlDocument();
-            document.LoadHtml(richTextBox1.Text);
-            var name = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[1]/h3[1]");
-            richTextBox1.Clear();
-            richTextBox1.Text = name.InnerHtml;
-            var res = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[2]");
-            string chapter = res.InnerHtml.ToString().Replace("<p>", "\n");
+            if (document != null)
+            {
+                document = null;
+                document = new HtmlAgilityPack.HtmlDocument();
+                document.LoadHtml(richTextBox1.Text);
+                // 腹黑女
+                var name = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[1]/h3[1]");
+                richTextBox1.Clear();
+                richTextBox1.Text = name.InnerHtml;
+                var res = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[2]");
+                string chapter = res.InnerHtml.ToString().Replace("<p>", "\n");
 
+                // 亲兵是女娃
+                //richTextBox1.Clear();
 
-            richTextBox1.AppendText(chapter);
+                //var name = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[2]/div[1]/div[1]/h3").InnerText;
+                //richTextBox1.Text = name.ToString();
+                //string chapter = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[2]/div[1]/div[2]").InnerText;
+
+                richTextBox1.AppendText(chapter);
+            }
         }
 
         private void btnSplit_Click(object sender, EventArgs e)
         {
-            FindCatalog("https://www.readnovel.com/book/7635085504787403#Catalog");
-            JumpChapter(5);
+            //FindCatalog("https://www.readnovel.com/book/7635085504787403#Catalog");//https://www.readnovel.com/book/7635085504787403
+            //JumpChapter(5);
+            FindBookInfo("");
+            FindCatalog(bookInfoList[0].BookAddress + "#Catalog");
 
+            LoadBookTree();
+            if (tvBook != null)
+            {
+                tvBook.SelectedNode = tvBook.Nodes[0].Nodes[2];
+            }
         }
 
         private void btnNextChapter_Click(object sender, EventArgs e)
         {
             FindNextChapter();
             LoadWebBook(chapterAddress);
-            LoadBook(); 
+            LoadBook();
             richTextBox1.Select(0, 0);
+            tvBook.SelectedNode = nextNode;
         }
         /// <summary>
         /// 查找下一章节
@@ -111,7 +134,7 @@ namespace XYBYReader
             {
                 string nextChapter = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]")
                     .Attributes["data-nurl"].Value.ToString();
-                chapterAddress += nextChapter;
+                chapterAddress = "https:" + nextChapter;
 
             }
         }
@@ -121,25 +144,30 @@ namespace XYBYReader
         /// <param name="address"></param>
         private void FindCatalog(string address)
         {
-            if (document == null)
+            LoadWebBook(address);
+
+            if (document != null)
             {
+                document = null;
                 document = new HtmlAgilityPack.HtmlDocument();
                 document.LoadHtml(richTextBox1.Text);
 
                 bookChapterList = new List<BookChapterClass>();
                 BookChapterClass bookChapter = null;
-                for (int i = 1; i <= 50; i++)
+
+                HtmlNodeCollection node = document.DocumentNode.SelectNodes(@"/html[1]/body[1]/div[1]/div[3]/div[3]/div[2]/div[1]/ul/li");
+                int id = 10001;
+                foreach (var item in node)
                 {
                     bookChapter = new BookChapterClass();
-                    bookChapter.ChapterId = Convert.ToInt16(document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[3]/div[3]/div[2]/div[1]/ul/li[" + i + "]")
-        .Attributes["data-rid"].Value.ToString());
-                    bookChapter.ChapterAddress = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[3]/div[3]/div[2]/div[1]/ul/li[" + i + "]/a")
-        .Attributes["href"].Value.ToString();
-                    bookChapter.ChapterName = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[3]/div[3]/div[2]/div[1]/ul/li[" + i + "]/a").InnerHtml;
+                    bookChapter.Id = id;
+                    bookChapter.ChapterRowId = Convert.ToInt16(item.Attributes["data-rid"].Value.ToString());
+                    bookChapter.ChapterAddress = "https:" + item.FirstChild.Attributes["href"].Value.ToString();
+                    bookChapter.ChapterName = item.FirstChild.InnerText;
 
                     bookChapterList.Add(bookChapter);
+                    id++;
                 }
-
             }
         }
         /// <summary>
@@ -148,10 +176,80 @@ namespace XYBYReader
         /// <param name="chapterId"></param>
         private void JumpChapter(int chapterId)
         {
-            chapterAddress += bookChapterList.Find(x => x.ChapterId == chapterId).ChapterAddress.ToString();
+            chapterAddress = "https:" + bookChapterList.Find(x => x.ChapterRowId == chapterId).ChapterAddress.ToString();
 
             LoadWebBook(chapterAddress);
             LoadBook();
+        }
+
+        private void FindBookInfo(string address)
+        {
+            if (document == null)
+            {
+                document = new HtmlAgilityPack.HtmlDocument();
+                document.LoadHtml(richTextBox1.Text);
+
+                bookInfoList = new List<WebBookClass>();
+                WebBookClass bookInfo;
+
+                HtmlNodeCollection node = document.DocumentNode.SelectNodes(@"/html/body/div/div[2]/div[2]/div[1]/div[1]/div/ul/li");
+                string path;
+                foreach (var item in node)
+                {
+                    bookInfo = new WebBookClass();
+                    path = item.ChildNodes[3].XPath;
+                    bookInfo.Author = item.ChildNodes[3].SelectSingleNode(path + @"/p[1]/a").InnerText;
+                    bookInfo.BookName = item.ChildNodes[3].ChildNodes[1].InnerText;
+                    //bookInfo.chapterCount = item.ChildNodes[3].SelectSingleNode(path+@"");
+                    //bookInfo.completeStatus = item.ChildNodes[3].ChildNodes[1].InnerText;
+                    //bookInfo.lastChapter = item.ChildNodes[3].ChildNodes[1].InnerText;
+                    //bookInfo.lastUpdate = item.ChildNodes[3].ChildNodes[1].InnerText;
+                    bookInfo.Preface = item.ChildNodes[3].SelectSingleNode(path + @"/p[2]").InnerText;
+
+                    bookInfo.BookAddress = "https:" + item.ChildNodes[3].SelectSingleNode(path + @"/h4/a").Attributes["href"].Value.ToString();
+
+                    bookInfoList.Add(bookInfo);
+                }
+            }
+        }
+
+        private void LoadBookTree()
+        {
+
+            TreeNode bookNode = new TreeNode();
+            bookNode.Text = bookInfoList[0].BookName;
+            bookNode.Tag = 101;
+
+
+            for (int i = 0; i < bookChapterList.Count; i++)
+            {
+                TreeNode chapterNode = new TreeNode();
+                chapterNode.Tag = bookChapterList[i].Id;
+                chapterNode.Text = bookChapterList[i].ChapterName;
+                bookNode.Nodes.Add(chapterNode);
+
+            }
+
+            tvBook.Nodes.Add(bookNode);
+            tvBook.ExpandAll();
+        }
+
+        private void tvBook_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (tvBook.SelectedNode != null)
+            {
+                if (tvBook.SelectedNode != e.Node)
+                {
+                    List<BookChapterClass> bl = new List<BookChapterClass>();
+                    bl = bookChapterList.Where(x => x.Id == (int)e.Node.Tag).ToList();
+                    string chapterAddress = bl[0].ChapterAddress;
+                    LoadWebBook(chapterAddress);
+                    LoadBook();
+                    nextNode = e.Node;
+                }
+
+            }
+
         }
     }
 }

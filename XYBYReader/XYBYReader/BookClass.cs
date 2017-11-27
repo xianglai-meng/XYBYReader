@@ -9,14 +9,14 @@ namespace XYBYReader
     /// <summary>
     /// 完结状态
     /// </summary>
-    public enum CompleteStatus { Continued,Completed,Stopped};
+    public enum CompleteStatus { Continued, Completed, Stopped };
     /// <summary>
     /// 书目类型
     /// Modern：现代；Ancient：古代；Romance：浪漫、言情；Battle：战争；Fantasy：玄幻；Occult：灵异；Science：科幻；Game：游戏。
     /// </summary>
-    public enum BookAttribute {Modern=1,Ancient=4,Romance=8,Battle=16,Fantasy=32,Occult=64,Science=128,Game=256 };
+    public enum BookAttribute { Modern = 1, Ancient = 4, Romance = 8, Battle = 16, Fantasy = 32, Occult = 64, Science = 128, Game = 256 };
 
-    public class BookClass
+    public abstract class BookClass
     {
         private string bookName;
         private string author;
@@ -49,5 +49,11 @@ namespace XYBYReader
         public string Preface { get => preface; set => preface = value; }
         public int BookType { get => bookAttributes; set => bookAttributes = value; }
         public List<string> Lable { get => lable; set => lable = value; }
+    }
+    public class WebBookClass : BookClass
+    {
+        private string bookAddress;
+
+        public string BookAddress { get => bookAddress; set => bookAddress = value; }
     }
 }
