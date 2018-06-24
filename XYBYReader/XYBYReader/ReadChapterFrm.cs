@@ -40,7 +40,7 @@ namespace XYBYReader
             if (tvBook != null)
             {
                 nextNode = tvBook.Nodes[0].Nodes[2];
-              
+
                 List<BookChapterClass> bl = new List<BookChapterClass>();
                 bl = bookChapterList.Where(x => x.Id == (int)nextNode.Tag).ToList();
                 string chapterAddress = bl[0].ChapterAddress;
@@ -268,6 +268,19 @@ namespace XYBYReader
 
             }
 
+        }
+
+        private void btnDownLoad_Click(object sender, EventArgs e)
+        {
+
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.FileName = tvBook.Nodes[0].Text;
+            dialog.Filter = "txt files(*.txt)|*.txt";
+            DialogResult dr = dialog.ShowDialog();
+            if (dr == DialogResult.OK && dialog.FileName.Length > 0)
+            {
+                richTextBox1.SaveFile(dialog.FileName, RichTextBoxStreamType.PlainText);
+            }
         }
     }
 }
