@@ -33,7 +33,11 @@
             this.btnNextChapter = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tvBook = new System.Windows.Forms.TreeView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnReadByPC = new System.Windows.Forms.Button();
+            this.btnStopRead = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -61,7 +65,7 @@
             // btnNextChapter
             // 
             this.btnNextChapter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextChapter.Location = new System.Drawing.Point(854, 596);
+            this.btnNextChapter.Location = new System.Drawing.Point(535, 3);
             this.btnNextChapter.Name = "btnNextChapter";
             this.btnNextChapter.Size = new System.Drawing.Size(75, 23);
             this.btnNextChapter.TabIndex = 2;
@@ -74,10 +78,10 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.60215F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.39785F));
-            this.tableLayoutPanel1.Controls.Add(this.btnNextChapter, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.richTextBox1, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnSplit, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.tvBook, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnSplit, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
@@ -85,6 +89,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.14456F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.85544F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(932, 637);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
@@ -98,6 +103,39 @@
             this.tvBook.TabIndex = 3;
             this.tvBook.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvBook_NodeMouseClick);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnStopRead);
+            this.panel1.Controls.Add(this.btnReadByPC);
+            this.panel1.Controls.Add(this.btnNextChapter);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(316, 596);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(613, 38);
+            this.panel1.TabIndex = 4;
+            // 
+            // btnReadByPC
+            // 
+            this.btnReadByPC.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReadByPC.Location = new System.Drawing.Point(0, 0);
+            this.btnReadByPC.Name = "btnReadByPC";
+            this.btnReadByPC.Size = new System.Drawing.Size(75, 23);
+            this.btnReadByPC.TabIndex = 3;
+            this.btnReadByPC.Text = "语音阅读";
+            this.btnReadByPC.UseVisualStyleBackColor = true;
+            this.btnReadByPC.Click += new System.EventHandler(this.btnReadByPC_Click);
+            // 
+            // btnStopRead
+            // 
+            this.btnStopRead.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStopRead.Location = new System.Drawing.Point(108, 0);
+            this.btnStopRead.Name = "btnStopRead";
+            this.btnStopRead.Size = new System.Drawing.Size(75, 23);
+            this.btnStopRead.TabIndex = 4;
+            this.btnStopRead.Text = "停止阅读";
+            this.btnStopRead.UseVisualStyleBackColor = true;
+            this.btnStopRead.Click += new System.EventHandler(this.btnStopRead_Click);
+            // 
             // ReadChapterFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -108,6 +146,7 @@
             this.Text = "溪语碧影小说阅读";
             this.Load += new System.EventHandler(this.ReadChapterFrm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -119,6 +158,9 @@
         private System.Windows.Forms.Button btnNextChapter;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TreeView tvBook;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnReadByPC;
+        private System.Windows.Forms.Button btnStopRead;
     }
 }
 

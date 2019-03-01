@@ -6,7 +6,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Speech.Synthesis;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HtmlAgilityPack;
@@ -20,6 +22,8 @@ namespace XYBYReader
         List<BookChapterClass> bookChapterList = null;
         List<WebBookClass> bookInfoList = null;
         TreeNode nextNode = null;
+        SpeechSynthesizer sspeak;
+
         public ReadChapterFrm()
         {
             InitializeComponent();
@@ -40,7 +44,7 @@ namespace XYBYReader
             if (tvBook != null)
             {
                 nextNode = tvBook.Nodes[0].Nodes[2];
-              
+
                 List<BookChapterClass> bl = new List<BookChapterClass>();
                 bl = bookChapterList.Where(x => x.Id == (int)nextNode.Tag).ToList();
                 string chapterAddress = bl[0].ChapterAddress;
@@ -103,18 +107,20 @@ namespace XYBYReader
                 document = new HtmlAgilityPack.HtmlDocument();
                 document.LoadHtml(richTextBox1.Text);
                 // 腹黑女
-                var name = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[1]/h3[1]");
+                //var name = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[1]/h3[1]");
+                var name = document.DocumentNode.SelectSingleNode("//h3[@class='j_chapterName']");
+
+
                 richTextBox1.Clear();
                 richTextBox1.Text = name.InnerHtml;
-                var res = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[2]");
-                string chapter = res.InnerHtml.ToString().Replace("<p>", "\n");
+                //var res = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[1]/div[1]/div[2]");
+                var res = document.DocumentNode.SelectSingleNode("//div[@class='main-text-wrap']/div[2]");
 
-                // 亲兵是女娃
-                //richTextBox1.Clear();
+                string chapter = res.InnerHtml.ToString().Replace("<p>", "\n\r  ");
+                //string chapter = res.InnerHtml.ToString().Replace("<p>", "\n");
 
-                //var name = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[2]/div[1]/div[1]/h3").InnerText;
-                //richTextBox1.Text = name.ToString();
-                //string chapter = document.DocumentNode.SelectSingleNode(@"/html[1]/body[1]/div[1]/div[4]/div[1]/div[2]/div[1]/div[2]").InnerText;
+
+
 
                 richTextBox1.AppendText(chapter);
             }
@@ -266,6 +272,38 @@ namespace XYBYReader
                     nextNode = e.Node;
                 }
 
+            }
+
+        }
+
+        private void btnReadByPC_Click(object sender, EventArgs e)
+        {
+
+            if (sspeak == null)
+            {
+                sspeak = new SpeechSynthesizer();
+            }
+            else
+            {
+                sspeak.SpeakAsyncCancelAll();//停止阅读
+                Thread.Sleep(1000);//响应停止操作
+            }
+
+            sspeak.Rate = 1;
+            sspeak.Volume = 100;
+            sspeak.SetOutputToDefaultAudioDevice();
+
+            Prompt text = new Prompt(this.richTextBox1.Text);
+            sspeak.SpeakAsync(text);
+
+
+        }
+
+        private void btnStopRead_Click(object sender, EventArgs e)
+        {
+            if (sspeak != null)
+            {
+                sspeak.SpeakAsyncCancelAll();//停止阅读
             }
 
         }
