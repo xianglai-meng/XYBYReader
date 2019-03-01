@@ -56,5 +56,7 @@ namespace XYBYReader
 
         public string BookAddress { get => bookAddress; set => bookAddress = value; }
     }
+
     //我是一个老好人
+
 }
