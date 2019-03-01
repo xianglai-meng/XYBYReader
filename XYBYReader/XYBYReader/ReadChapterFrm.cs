@@ -276,6 +276,7 @@ namespace XYBYReader
 
         }
 
+
         private void btnReadByPC_Click(object sender, EventArgs e)
         {
 
@@ -304,6 +305,19 @@ namespace XYBYReader
             if (sspeak != null)
             {
                 sspeak.SpeakAsyncCancelAll();//停止阅读
+            }
+
+        }
+        private void btnDownLoad_Click(object sender, EventArgs e)
+        {
+
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.FileName = tvBook.Nodes[0].Text;
+            dialog.Filter = "txt files(*.txt)|*.txt";
+            DialogResult dr = dialog.ShowDialog();
+            if (dr == DialogResult.OK && dialog.FileName.Length > 0)
+            {
+                richTextBox1.SaveFile(dialog.FileName, RichTextBoxStreamType.PlainText);
             }
 
         }

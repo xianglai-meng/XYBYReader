@@ -34,10 +34,13 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tvBook = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnReadByPC = new System.Windows.Forms.Button();
             this.btnStopRead = new System.Windows.Forms.Button();
+            this.btnReadByPC = new System.Windows.Forms.Button();
+            this.btnDownLoad = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // richTextBox1
@@ -54,7 +57,7 @@
             // 
             // btnSplit
             // 
-            this.btnSplit.Location = new System.Drawing.Point(3, 596);
+            this.btnSplit.Location = new System.Drawing.Point(9, 3);
             this.btnSplit.Name = "btnSplit";
             this.btnSplit.Size = new System.Drawing.Size(75, 23);
             this.btnSplit.TabIndex = 1;
@@ -65,7 +68,7 @@
             // btnNextChapter
             // 
             this.btnNextChapter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNextChapter.Location = new System.Drawing.Point(535, 3);
+            this.btnNextChapter.Location = new System.Drawing.Point(535, 0);
             this.btnNextChapter.Name = "btnNextChapter";
             this.btnNextChapter.Size = new System.Drawing.Size(75, 23);
             this.btnNextChapter.TabIndex = 2;
@@ -78,9 +81,9 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.60215F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.39785F));
-            this.tableLayoutPanel1.Controls.Add(this.richTextBox1, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.tvBook, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnSplit, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.richTextBox1, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -107,23 +110,13 @@
             // 
             this.panel1.Controls.Add(this.btnStopRead);
             this.panel1.Controls.Add(this.btnReadByPC);
+            this.panel1.Controls.Add(this.btnDownLoad);
             this.panel1.Controls.Add(this.btnNextChapter);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(316, 596);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(613, 38);
             this.panel1.TabIndex = 4;
-            // 
-            // btnReadByPC
-            // 
-            this.btnReadByPC.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnReadByPC.Location = new System.Drawing.Point(0, 0);
-            this.btnReadByPC.Name = "btnReadByPC";
-            this.btnReadByPC.Size = new System.Drawing.Size(75, 23);
-            this.btnReadByPC.TabIndex = 3;
-            this.btnReadByPC.Text = "语音阅读";
-            this.btnReadByPC.UseVisualStyleBackColor = true;
-            this.btnReadByPC.Click += new System.EventHandler(this.btnReadByPC_Click);
             // 
             // btnStopRead
             // 
@@ -136,6 +129,36 @@
             this.btnStopRead.UseVisualStyleBackColor = true;
             this.btnStopRead.Click += new System.EventHandler(this.btnStopRead_Click);
             // 
+            // btnReadByPC
+            // 
+            this.btnReadByPC.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReadByPC.Location = new System.Drawing.Point(0, 0);
+            this.btnReadByPC.Name = "btnReadByPC";
+            this.btnReadByPC.Size = new System.Drawing.Size(75, 23);
+            this.btnReadByPC.TabIndex = 3;
+            this.btnReadByPC.Text = "语音阅读";
+            this.btnReadByPC.UseVisualStyleBackColor = true;
+            this.btnReadByPC.Click += new System.EventHandler(this.btnReadByPC_Click);
+            // 
+            // btnDownLoad
+            // 
+            this.btnDownLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDownLoad.Location = new System.Drawing.Point(413, 0);
+            this.btnDownLoad.Name = "btnDownLoad";
+            this.btnDownLoad.Size = new System.Drawing.Size(102, 23);
+            this.btnDownLoad.TabIndex = 3;
+            this.btnDownLoad.Text = "下载本章到本地";
+            this.btnDownLoad.UseVisualStyleBackColor = true;
+            this.btnDownLoad.Click += new System.EventHandler(this.btnDownLoad_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.btnSplit);
+            this.panel2.Location = new System.Drawing.Point(3, 596);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(307, 38);
+            this.panel2.TabIndex = 4;
+            // 
             // ReadChapterFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -147,6 +170,7 @@
             this.Load += new System.EventHandler(this.ReadChapterFrm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -158,9 +182,15 @@
         private System.Windows.Forms.Button btnNextChapter;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TreeView tvBook;
-        private System.Windows.Forms.Panel panel1;
+
+
         private System.Windows.Forms.Button btnReadByPC;
         private System.Windows.Forms.Button btnStopRead;
+
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnDownLoad;
+
     }
 }
 
